@@ -13,9 +13,9 @@ class MainMenu_Walker extends Walker_Nav_Menu
         if ($permalink && $permalink != '#') {
             $output .= '<a href="' . $permalink . '" class="nav-link">';
         } else {
-            $output .= '<a data-toggle="collapse" class="nav-link  dropdown-toggle" href="' . $permalink . '" >';
-            //                ' <a class="nav-link  dropdown-toggle" data-toggle="collapse" href="#collapseExample" role="button"
-//               aria-expanded="false" aria-controls="collapseExample">';
+//            $output .= '<a data-toggle="collapse" class="nav-link  dropdown-toggle" href="' . $permalink . '" >';
+            $output .=    ' <a class="nav-link  dropdown-toggle" data-toggle="collapse" href="#collapseExample" role="button"
+               aria-expanded="false" aria-controls="collapseExample">';
         }
 
         $output .= $title;
