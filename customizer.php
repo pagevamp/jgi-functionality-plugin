@@ -103,6 +103,15 @@ function addFooterSettings($wp_customize)
         'section' => 'footer_settings',
         'settings' => 'footer_bg_image',
     )));
+    $wp_customize->add_setting('footer_price_list', []);
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'footer_price_list',array(
+        'label' => 'Footer Price List Image',
+        'description' => 'Preferred size 1000px by 1600 px',
+        'section' => 'footer_settings',
+        'settings' => 'footer_price_list',
+    )));
+
 
 }
 
