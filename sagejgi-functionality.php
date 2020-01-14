@@ -38,34 +38,36 @@ function create_posttype()
 add_action('init', 'create_posttype');
 
 //add product taxonomy
-function taxonomies_product() {
+function taxonomies_product()
+{
     $labels = array(
-        'name' => _x( 'Product Types', 'taxonomy general name' ),
-        'singular_name' => _x( 'Product Type', 'taxonomy singular name' ),
-        'search_items' => __( 'Search Product Types' ),
-        'all_items' => __( 'All Product Types' ),
-        'parent_item' => __( 'Parent Product Type' ),
-        'parent_item_colon' => __( 'Parent Product Type:' ),
-        'edit_item' => __( 'Edit Product Type' ),
-        'update_item' => __( 'Update Product Type' ),
-        'add_new_item' => __( 'Add New Product Type' ),
-        'new_item_name' => __( 'New Product Type' ),
-        'menu_name' => __( ' Product Types' ),
+        'name' => _x('Product Types', 'taxonomy general name'),
+        'singular_name' => _x('Product Type', 'taxonomy singular name'),
+        'search_items' => __('Search Product Types'),
+        'all_items' => __('All Product Types'),
+        'parent_item' => __('Parent Product Type'),
+        'parent_item_colon' => __('Parent Product Type:'),
+        'edit_item' => __('Edit Product Type'),
+        'update_item' => __('Update Product Type'),
+        'add_new_item' => __('Add New Product Type'),
+        'new_item_name' => __('New Product Type'),
+        'menu_name' => __(' Product Types'),
     );
     $args = array(
         'labels' => $labels,
         'hierarchical' => true,
     );
-    register_taxonomy( 'product_category', 'products', $args );
+    register_taxonomy('product_category', 'products', $args);
 }
-add_action( 'init', 'taxonomies_product', 0 );
+
+add_action('init', 'taxonomies_product', 0);
 
 
 //custom career post type function
-function create_posttype_careers()
+function create_posttype_careersjobs()
 {
 
-    register_post_type('careers',
+    register_post_type('careersjobs',
         array(
             'labels' => array(
                 'name' => __('Careers'),
@@ -73,7 +75,7 @@ function create_posttype_careers()
             ),
             'public' => true,
             'has_archive' => true,
-            'rewrite' => array('slug' => 'careers'),
+            'rewrite' => array('slug' => 'careersjobs'),
             'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'tags')
         )
 
@@ -81,33 +83,44 @@ function create_posttype_careers()
 
 }
 
-add_action('init', 'create_posttype_careers');
+add_action('init', 'create_posttype_careersjobs');
 
 //add career taxonomy
-function taxonomies_career() {
+function taxonomies_career()
+{
     $labels = array(
-        'name' => _x( 'Departments', 'taxonomy general name' ),
-        'singular_name' => _x( 'Department Type', 'taxonomy singular name' ),
-        'search_items' => __( 'Search Departments' ),
-        'all_items' => __( 'All Departments' ),
-        'parent_item' => __( 'Parent Department' ),
-        'parent_item_colon' => __( 'Parent Department:' ),
-        'edit_item' => __( 'Edit Department' ),
-        'update_item' => __( 'Update Department' ),
-        'add_new_item' => __( 'Add New Department' ),
-        'new_item_name' => __( 'New Department' ),
-        'menu_name' => __( ' Departments' ),
+        'name' => _x('Departments', 'taxonomy general name'),
+        'singular_name' => _x('Department Type', 'taxonomy singular name'),
+        'search_items' => __('Search Departments'),
+        'all_items' => __('All Departments'),
+        'parent_item' => __('Parent Department'),
+        'parent_item_colon' => __('Parent Department:'),
+        'edit_item' => __('Edit Department'),
+        'update_item' => __('Update Department'),
+        'add_new_item' => __('Add New Department'),
+        'new_item_name' => __('New Department'),
+        'menu_name' => __(' Departments'),
     );
     $args = array(
         'labels' => $labels,
         'hierarchical' => true,
     );
-    register_taxonomy( 'career_category', 'careers', $args );
+    register_taxonomy('career_category', 'careersjobs', $args);
 }
-add_action( 'init', 'taxonomies_career', 0 );
 
-//page title
-add_action( 'after_setup_theme', 'theme_setup' );
-function theme_setup() {
-    add_theme_support('title-tag');
+add_action('init', 'taxonomies_career', 0);
+
+
+/* check if user is administrator - only show downloads menu if is admin */
+
+add_action('admin_init', 'remove_menu');
+function remove_menu()
+{
+    $user = wp_get_current_user();
+
+    if (in_array('editor', (array)$user->roles) || in_array('brands_editor', (array)$user->roles) || in_array('careers_editor', (array)$user->roles)) {
+        remove_menu_page('edit.php');
+        remove_menu_page('edit-comments.php');
+    }
+
 }
